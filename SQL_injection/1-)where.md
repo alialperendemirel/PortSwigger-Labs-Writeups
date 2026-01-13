@@ -1,1 +1,1 @@
-
+Started diving into SQL Injection on PortSwigger Web Security Academy. In today's lab, I learned how to bypass category filters and expose hidden data by manipulating SQL logic using standard payloads like '+OR+1=1--. Understanding the backend logic of database queries is truly exciting. 🚀
