@@ -1,18 +1,33 @@
-URL-based access control bypass (X-Original-URL Başlığı ile Erişim Kontrolünü Atlatma)
+🎯 Zafiyet Tanımı: Routing Misconfiguration & Reverse Proxy Bypass
 
-    Zafiyetin Mantığı: Sistemin ön uç (front-end / güvenlik duvarı) ile arka uç (back-end) sunucusu arasındaki iletişim ve yorumlama kopukluğu. Ön uç mekanizması sadece isteğin ilk satırındaki yola (GET /) bakarak geçiş izni verirken, arka ucun gidilecek asıl sayfayı belirlemek için X-Original-URL (veya X-Rewrite-URL) gibi özel HTTP başlıklarına (header) körü körüne güvenmesi.
+Bu laboratuvarda, ön uç (Front-end Proxy/WAF) ile arka uç (Back-end Application Server) sunucuları arasındaki URL ayrıştırma (parsing) ve rota senkronizasyonu uyumsuzluğu istismar edilmiştir.
 
-    Sömürü (Exploitation):
+Uygulama, erişim kontrolü filtrelemesini Front-end üzerinde yaparken; yönlendirme (routing) mantığını Back-end üzerinde X-Original-URL HTTP başlığına (header) güvenerek gerçekleştirmektedir.
+🛠️ Adım Adım Saldırı Mantığı (Attack Steps)
 
-        /admin paneline doğrudan girilmeye çalışıldığında ön uç sistemi bunu tespit edip engeller (Block).
+    Erişim Engeli (403 Forbidden):
+    Tarayıcı üzerinden doğrudan /admin yoluna istek atıldığında, Front-end güvenlik duvarı isteği yakalar ve erişimi engeller.
 
-        Burp Suite üzerinden istek GET / HTTP/2 olarak değiştirilir. Böylece ön uç "Sadece ana sayfaya gidiliyor" diyerek geçişe izin verir.
+    Front-end Filtresini Atlatma (Bypass):
 
-        Arka uca asıl hedefi göstermek için HTTP başlıklarına X-Original-URL: /admin/delete satırı eklenir.
+        İstek satırındaki (Request Line) URL, herkesin erişimine açık olan ana sayfa (/) olarak değiştirilir.
 
-        Kritik Adım: İşlemin gerçekleşmesi için gereken parametre (username=carlos) asıl isteğin ilk satırına eklenir. Nihai istek GET /?username=carlos HTTP/2 şeklinde sunucuya gönderilerek arka uçtaki silme işlemi tetiklenir.
+        Bu sayede Front-end proxy, "İstek zararsız bir sayfaya gidiyor" mantığıyla güvenliği tetiklemez ve isteği Back-end'e iletir.
 
-    Alınacak Ders (Mitigation): Uygulama mimarisinde, ön uç ve arka uç sistemleri gelen istekleri aynı şekilde (tutarlı) yorumlamalıdır. Geçerli ve çok özel bir mimari sebep yoksa, arka uç sistemleri X-Original-URL veya X-Rewrite-URL gibi uygulamanın yönlendirmesini manipüle edebilecek başlıkları kesinlikle kabul etmemelidir.
+    Back-end Rota Manipülasyonu (X-Original-URL):
 
+        İsteğe X-Original-URL: /admin başlığı eklenir.
 
-    X-Original-URL veya X-Rewrite-URL
+        Back-end sunucu bu başlığı okuduğunda, kullanıcının gitmek istediği asıl hedefin /admin olduğunu varsayar ve admin panelinin içeriğini (200 OK) saldırgana döner.
+
+    Parametreli Aksiyon Tetikleme (User Deletion):
+
+        Hedef fonksiyona (/admin/delete) parametre göndermek için Front-end'i yanıltacak şekilde query string ana isteğe eklenir: GET /?username=carlos
+
+        Gitmek istediğimiz asıl fonksiyon yolu ise başlıkta gizlenir: X-Original-URL: /admin/delete
+
+        Back-end, hafızasındaki username=carlos verisini X-Original-URL'den aldığı silme rotasına paslayarak hedef kullanıcıyı siler.
+
+📌 Çıkarılan Ders (Takeaway)
+
+Güvenlik kararları (Access Control), ön uç ve arka uç arasında paylaştırılmamalıdır. Ön ucun engellediği veya izin verdiği bir rota ile arka ucun işlediği rota tanımı birbiriyle %100 senkronize olmalıdır. X-Original-URL veya X-Rewrite-URL gibi başlıklar üzerinde arka uç sunucusu doğrudan yönlendirme yapmamalıdır.
