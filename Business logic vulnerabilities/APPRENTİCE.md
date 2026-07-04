@@ -1,4 +1,5 @@
 1. Excessive trust in client-side controls (İstemci Tarafındaki Kontrollere Aşırı Güven)
+  (ürünü sepete eklerken ordaki fiyatını degiştirme)
 
     Zafiyetin Mantığı: Sunucunun, kullanıcının tarayıcısından (istemciden) gelen kritik verilere doğrulamadan güvenmesi. Yazılımcı, arayüzdeki fiyatın değiştirilemeyeceğini varsaymıştır.
 
@@ -6,7 +7,7 @@
 
     Alınacak Ders (Mitigation): Sunucu, asla fiyat gibi kritik verileri istemciden almamalıdır. Kullanıcıdan sadece ürün_id ve miktar alınmalı, fiyat veritabanından (backend) çekilerek hesaplanmalıdır.
 
-2. High-level logic vulnerability (Üst Düzey Mantık Zafiyeti / Negatif Miktar)
+3. High-level logic vulnerability (Üst Düzey Mantık Zafiyeti / Negatif Miktar)
 
     Zafiyetin Mantığı: Uygulamanın, sepete eklenen ürünlerin miktar (quantity) değerinde matematiksel bir sınırlandırma yapmayı unutması. Eksi (-) değerlerin kabul edilmesi.
 
@@ -14,7 +15,7 @@
 
     Alınacak Ders (Mitigation): Kullanıcıdan alınan miktar parametreleri kesinlikle sunucu tarafında doğrulanmalıdır (if quantity > 0). Ayrıca sepet toplamının eksiye veya sıfırın altına düşmesi engellenmelidir.
 
-3. Inconsistent security controls (Tutarsız Güvenlik Kontrolleri)
+4. Inconsistent security controls (Tutarsız Güvenlik Kontrolleri)
 
     Zafiyetin Mantığı: Sistemin farklı bölümlerinde aynı güvenlik kurallarının uygulanmaması. Kayıt (Register) olurken e-posta doğrulayan sistemin, Profil Güncelleme (Update) yaparken doğrulamayı unutması. Ayrıca yetkilendirmenin sadece e-posta uzantısına bakılarak verilmesi.
 
@@ -22,7 +23,7 @@
 
     Alınacak Ders (Mitigation): Kritik profil güncellemelerinde (özellikle e-posta) mutlaka yeni adrese doğrulama maili gönderilmelidir. Yetkilendirmeler e-posta uzantısıyla değil, veritabanındaki sağlam yetki rolleriyle (Role-Based Access Control) yapılmalıdır.
 
-4. Flawed enforcement of business rules (İş Kurallarının Hatalı Uygulanması)
+5. Flawed enforcement of business rules (İş Kurallarının Hatalı Uygulanması)
 
     Zafiyetin Mantığı: Sistemin, uygulanan kuralların tarihçesini tutmak yerine sadece "bir adım geriyi" hatırlaması.
 
