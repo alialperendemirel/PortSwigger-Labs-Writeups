@@ -7,8 +7,9 @@
 
     Alınacak Ders (Mitigation): Sunucu, asla fiyat gibi kritik verileri istemciden almamalıdır. Kullanıcıdan sadece ürün_id ve miktar alınmalı, fiyat veritabanından (backend) çekilerek hesaplanmalıdır.
 
-3. High-level logic vulnerability (Üst Düzey Mantık Zafiyeti / Negatif Miktar)
-
+2. High-level logic vulnerability (Üst Düzey Mantık Zafiyeti / Negatif Miktar)
+    (ürünü sepeti eklerken - ürün ekleyerek sepete ekleme)
+   
     Zafiyetin Mantığı: Uygulamanın, sepete eklenen ürünlerin miktar (quantity) değerinde matematiksel bir sınırlandırma yapmayı unutması. Eksi (-) değerlerin kabul edilmesi.
 
     Sömürü (Exploitation): Normal yollarla alınamayacak kadar pahalı bir ürün sepete eklenir. Ardından ucuz başka bir ürünün sepete eklenme isteği Burp ile yakalanır ve miktarı negatif bir değer yapılır (örn: quantity=-50). Matematiksel olarak ucuz ürün sepetin toplam tutarından düşer ve pahalı ürün bakiyenin yettiği bir fiyata alınır.
