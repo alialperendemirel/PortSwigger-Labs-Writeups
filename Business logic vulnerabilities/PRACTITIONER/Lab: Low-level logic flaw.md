@@ -1,5 +1,5 @@
-Harika bir laboratuvar daha bitmiş! Bu bölüm, siber güvenlikte sadece web mimarisini değil, bilgisayar bilimlerinin temellerini (hafıza ve veri tiplerini) de bilmenin ne kadar önemli olduğunu gösteren efsanevi bir örnektir.
 
+(BİR ÜRÜNDEN ÇOK FAZLA EKLEYİP SAYACI BOZUK EKSİ MİKTARA ÇEVİRİP DAHA SONRA ÜRÜN EKLEYEREK ARTI YAPIP UCUZA ALMA)
 Buna literatürde "Integer Overflow" (Tam Sayı Taşması) denir. GitHub repon için doğrudan kopyalayabileceğin, net ve profesyonel özetini aşağıda hazırladım:
 Low-level logic flaw (Düşük Seviye Mantık Hatası / Integer Overflow)
 
