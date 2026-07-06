@@ -24,7 +24,7 @@
 
     Alınacak Ders (Mitigation): Kritik profil güncellemelerinde (özellikle e-posta) mutlaka yeni adrese doğrulama maili gönderilmelidir. Yetkilendirmeler e-posta uzantısıyla değil, veritabanındaki sağlam yetki rolleriyle (Role-Based Access Control) yapılmalıdır.
 
-5. Flawed enforcement of business rules (İş Kurallarının Hatalı Uygulanması)
+4. Flawed enforcement of business rules (İş Kurallarının Hatalı Uygulanması)(iki farklı indirim kodunu sürekli sırayla basmak)
 
     Zafiyetin Mantığı: Sistemin, uygulanan kuralların tarihçesini tutmak yerine sadece "bir adım geriyi" hatırlaması.
 
