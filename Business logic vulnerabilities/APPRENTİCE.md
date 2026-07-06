@@ -16,7 +16,7 @@
 
     Alınacak Ders (Mitigation): Kullanıcıdan alınan miktar parametreleri kesinlikle sunucu tarafında doğrulanmalıdır (if quantity > 0). Ayrıca sepet toplamının eksiye veya sıfırın altına düşmesi engellenmelidir.
 
-4. Inconsistent security controls (Tutarsız Güvenlik Kontrolleri)
+3. Inconsistent security controls (Tutarsız Güvenlik Kontrolleri) (uygulama içinde  eposta degiştirme)
 
     Zafiyetin Mantığı: Sistemin farklı bölümlerinde aynı güvenlik kurallarının uygulanmaması. Kayıt (Register) olurken e-posta doğrulayan sistemin, Profil Güncelleme (Update) yaparken doğrulamayı unutması. Ayrıca yetkilendirmenin sadece e-posta uzantısına bakılarak verilmesi.
 
